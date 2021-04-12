@@ -22,19 +22,22 @@ RUN	openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 # adding an html index cuz why not
 RUN	echo "hello world!!" > /var/www/localhost/index.html
 
-COPY start.sh .
+COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
+
+COPY ./srcs/start.sh .
 RUN	chmod +x start.sh
 
 #RUN mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.og
 # grabing the config file
 # change this later
-COPY	nginx.config /etc/nginx/conf.d/default.conf
+COPY	./srcs/nginx.config /etc/nginx/conf.d/default.conf
 # temporarily using a simpler config file
 #COPY nginx.config.tmp /etc/nginx/conf.d/default.conf
 
 EXPOSE	80 443
 
-CMD	./start.sh
-#CMD	nginx -g 'daemon off;'
+# add telegraf start
+#CMD	./start.sh
+CMD	nginx -g 'daemon off;'
 
 

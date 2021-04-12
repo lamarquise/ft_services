@@ -20,6 +20,7 @@ RUN	/etc/init.d/mariadb setup
 COPY ./srcs/my.cnf /etc/mysql/my.cnf
 RUN	chmod 0444 /etc/my.cnf
 
+COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 	#might have to run this once the container is actually up and running...
 #RUN service mariadb restart

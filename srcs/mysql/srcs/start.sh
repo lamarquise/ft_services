@@ -16,4 +16,4 @@ mysql -u root -e "CREATE USER 'wp_user'@'%' IDENTIFIED BY 'password';"
 mysql -u root -e "GRANT ALL ON wordpress.* TO 'wp_user'@'%' IDENTIFIED BY 'password';"
 mysql -u root -e "FLUSH PRIVILEGES;"
 
-sh
+#sh

@@ -22,6 +22,8 @@ RUN	openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 	/etc/nginx/ssl/localhost.pem -keyout /etc/nginx/ssl/localhost.key \
 	-subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=erlazo/CN=localhost"
 
+COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
+
 # Now for Wordpress
 
 RUN	mkdir -p /var/www/localhost/
@@ -41,7 +43,7 @@ RUN wget https://wordpress.org/latest.tar.gz \
 
 #RUN chmod +x /var/www/localhost/phpmyadmin/config.inc.php
 
-EXPOSE 5050 5000
+EXPOSE 5050
 
 # mysql should already have been started
 
@@ -50,4 +52,4 @@ EXPOSE 5050 5000
 # This is the one you would use for testing if you want to get into the shell
 #CMD ["/bin/sh", "start.sh"]
 
-CMD php-fpm7 && nginx -g 'daemon off;'
+CMD	php-fpm7 && screen -d -m telegraf && nginx -g 'daemon off;'

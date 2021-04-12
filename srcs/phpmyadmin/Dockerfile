@@ -17,6 +17,7 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 	/etc/nginx/ssl/localhost.pem -keyout /etc/nginx/ssl/localhost.key \
 	-subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=erlazo/CN=localhost"
 
+COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 # now for PhpMyAdmin
 

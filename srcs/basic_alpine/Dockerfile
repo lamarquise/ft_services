@@ -1,7 +1,12 @@
+#BASIC ALPINE
 FROM alpine:latest
 
+
+# apk add telegraf and possibly screen too
 # we are starting from scratch...
-RUN apk update
+RUN	apk update
+
+RUN	apk add telegraf screen
 
 
 # for now, because we can't use the default image, we have to do something

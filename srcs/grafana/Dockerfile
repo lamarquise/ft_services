@@ -8,12 +8,12 @@ RUN	apk add telegraf
 				# do i need grafana-openrc? screen?
 RUN	apk add grafana screen
 
+COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
+
+WORKDIR /usr/share/grafana
 COPY ./srcs/start.sh .
 RUN	chmod +x start.sh
 
-# basically this puts us in the /usr/share/grafana dir from the get go
-# do this after you copy things
-WORKDIR /usr/share/grafana
 
 EXPOSE	3000
 

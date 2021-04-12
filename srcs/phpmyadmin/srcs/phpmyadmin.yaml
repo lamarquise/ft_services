@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: phpmyadmin
+ labels:
+  app: phpmyadmin
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: phpmyadmin
+ template:
+  metadata:
+   labels:
+    app: phpmyadmin
+  spec:
+   containers:
+   - name: phpmyadmin
+     image: phpmyadmin_img
+     imagePullPolicy: Never
+     ports:
+     - containerPort: 5000
+     env:
+     - name: INFLUX_DB
+       value: influxdb-service.default.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: phpmyadmin-service
+spec:
+ type: LoadBalancer
+ selector:
+  app: phpmyadmin
+ ports:
+ - protocol: TCP
+   port: 5000
+   targetPort: 5000
+   name: phpmyadmin-service-port

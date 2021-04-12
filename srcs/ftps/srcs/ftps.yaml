@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: ftps
+ labels:
+  app: ftps
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: ftps
+ template:
+  metadata:
+   labels:
+    app: ftps
+  spec:
+   containers:
+   - name: ftps
+     image: ftps_img
+     imagePullPolicy: Never
+     ports:
+     - containerPort: 20
+     - containerPort: 21
+     - containerPort: 7777
+     env:
+     - name: INFLUX_IP
+       value: influxdb-service.default.svc.cluster.local
+     - name: NODE_IP
+        value: ftps-service.default.svc.cluster.local
+# svc stands for service, so this path might be wrong...
+# IDK if this will work... could put in the IP# instead of using a var...
+#        value: status.hostIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: ftps-service
+spec:
+ type: LoadBalancer
+ selector:
+  app: ftps
+ ports:
+ - protocol: TCP
+   port: 20
+   targetPort: 20
+   name: ftps-service-data-port
+ - protocol: TCP
+   port: 21
+   targetPort: 21
+   name: ftps-service-port
+ - protocol: TCP
+   port: 7777
+   targetPort: 7777
+   name: ftps-service-passv-port
