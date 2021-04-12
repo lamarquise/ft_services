@@ -1,9 +1,6 @@
 FROM alpine:latest
 
 # we are starting from scratch...
-
-
-
 RUN apk update
 
 

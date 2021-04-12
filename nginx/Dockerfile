@@ -1,6 +1,6 @@
+#NGINX
 FROM basic_alpine_img
 
-RUN	apk update
 # was with openrc
 RUN	apk add nginx openssl
 
