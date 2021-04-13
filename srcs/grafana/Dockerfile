@@ -1,16 +1,15 @@
 #GRAFANA
 FROM basic_alpine_img
 
-	# evenutally this will go in basic alpine
-	# screen should also go in basic_alpine
-RUN	apk add telegraf
-
-				# do i need grafana-openrc? screen?
-RUN	apk add grafana screen
+RUN	apk add grafana
 
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 WORKDIR /usr/share/grafana
+
+# add all the config files... when you have them
+
+	# for testing
 COPY ./srcs/start.sh .
 RUN	chmod +x start.sh
 
@@ -18,6 +17,6 @@ RUN	chmod +x start.sh
 EXPOSE	3000
 
 # for testing
-CMD	./start.sh
+#CMD	./start.sh
 
-#CMD	screen -d -m telegraf
+CMD	screen -d -m telegraf && grafana-server

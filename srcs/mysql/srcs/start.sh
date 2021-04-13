@@ -16,4 +16,6 @@ mysql -u root -e "CREATE USER 'wp_user'@'%' IDENTIFIED BY 'password';"
 mysql -u root -e "GRANT ALL ON wordpress.* TO 'wp_user'@'%' IDENTIFIED BY 'password';"
 mysql -u root -e "FLUSH PRIVILEGES;"
 
+screen -d -m telegraf && /usr/bin/mysqld --defaults-file=/etc/mysql/my.cnf --user=root --console
+
 #sh

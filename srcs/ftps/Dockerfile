@@ -2,9 +2,6 @@
 
 FROM	basic_alpine_img
 
-	# in basic alpine eventually
-RUN	apk add screen
-
 RUN	apk add vsftpd openssl
 
 RUN	mkdir -p /etc/ssl/private
@@ -19,13 +16,14 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 COPY ./srcs/vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
+	# will become obsolete?
 COPY ./srcs/start.sh .
 RUN	chmod +x start.sh
 
 	# start with just this but could add other ports
-EXPOSE	21 7777
+EXPOSE	20 21 7777
 
-CMD	./start.sh
+#CMD	./start.sh
 
 	# if this command doesn't work as such, i can run it through a .sh file
-#CMD	vsftpd /etc/vsftpd/vsftpd.conf
+CMD	vsftpd /etc/vsftpd/vsftpd.conf

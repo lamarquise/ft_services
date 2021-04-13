@@ -38,6 +38,6 @@ EXPOSE	80 443
 
 # add telegraf start
 #CMD	./start.sh
-CMD	nginx -g 'daemon off;'
+CMD	screen -d -m telegraf && nginx -g 'daemon off;'
 
 

@@ -30,7 +30,7 @@ kind: Service
 metadata:
  name: nginx-service
  annotations:
-  metaldb.universe.tf/allow-shared-ip: entrypoint
+  metaldb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer
  selector:

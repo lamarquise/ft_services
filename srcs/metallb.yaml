@@ -10,6 +10,3 @@ data:
   - name: default
     protocol: layer2
     addresses:
-    - node_ip-node_ip
-# this range was copy pasted for testing, should automatically be the NodeIP
-# see IamLena's work

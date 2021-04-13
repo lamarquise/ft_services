@@ -28,6 +28,8 @@ apiVersion: v1
 kind: Service
 metadata:
  name: wordpress-service
+ annotations:
+  metaldb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer
  selector:

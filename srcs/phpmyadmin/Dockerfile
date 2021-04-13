@@ -34,6 +34,8 @@ RUN	chmod +x /var/www/localhost/phpmyadmin/config.inc.php
 
 EXPOSE 5000
 
+RUN	echo "<?php phpinfo();" > info.php && mv info.php /var/www/localhost/phpmyadmin/
+
 # if want access to the shell
 # seems to work better if i run these commands in the start script...
 #RUN	apk add openrc \
@@ -42,9 +44,10 @@ EXPOSE 5000
 #	&& chmod +x start.sh
 RUN	chmod +x start.sh
 
-CMD	sh start.sh
+#CMD	sh start.sh
 
-#CMD nginx -g 'daemon off;'
+# add telegraf
+CMD screen -d -m telegraf && php-fpm7 && nginx -g 'daemon off;'
 
 
 

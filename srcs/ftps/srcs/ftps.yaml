@@ -27,6 +27,8 @@ spec:
        value: influxdb-service.default.svc.cluster.local
      - name: NODE_IP
         value: ftps-service.default.svc.cluster.local
+#		Im pretty sure this thing above won't work...
+#
 # svc stands for service, so this path might be wrong...
 # IDK if this will work... could put in the IP# instead of using a var...
 #        value: status.hostIP
@@ -35,6 +37,8 @@ apiVersion: v1
 kind: Service
 metadata:
  name: ftps-service
+ annotations:
+  metallb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer
  selector:

@@ -12,6 +12,6 @@ RUN	chmod +x start.sh
 
 # tmp for testing
 # actually maybe need this permanently
-CMD ./start.sh
+#CMD ./start.sh
 
-#CMD	screen -d -m telegraf && influxd
+CMD	screen -d -m telegraf && influxd

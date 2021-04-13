@@ -20,4 +20,4 @@ service nginx start
 
 
 
-sh
+#sh
