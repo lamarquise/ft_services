@@ -31,7 +31,7 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 
 // Im gonna guess this needs to be 'mysql_service' instead of 'localhost'
 
-$cfg['Servers'][$i]['host'] = 'mysql_service';
+$cfg['Servers'][$i]['host'] = 'mysql-service';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 

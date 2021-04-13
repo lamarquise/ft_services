@@ -6,7 +6,7 @@ FROM alpine:latest
 # we are starting from scratch...
 RUN	apk update
 
-RUN	apk add telegraf screen
+RUN	apk add --no-cache telegraf screen
 
 
 # i think openrc is how i get to use service, as in service nginx start

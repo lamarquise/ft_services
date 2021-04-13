@@ -1,0 +1,48 @@
+# will need Persistent Volume Claim here
+apiVersion: v1
+kind: Service
+metadata:
+ name: mysql-service
+spec:
+ type: ClusterIP
+ selector:
+  app: mysql
+ ports:
+ - protocol: TCP
+   port: 3306
+   targetPort: 3306
+   name: mysql-service-port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: mysql
+ labels:
+  app: mysql
+spec:
+ strategy:
+  type: Recreate
+ replicas: 1
+ selector:
+  matchLabels:
+   app: mysql
+ template:
+  metadata:
+   labels:
+    app: mysql
+  spec:
+   restartPolicy: Always
+   containers:
+   - name: mysql
+     image: mysql_img
+     imagePullPolicy: Never
+     ports:
+     - containerPort: 3306
+     livenessProbe:
+       exec:
+        command:
+          - sh
+          - livenessprobe.sh
+       initialDelaySeconds: 30
+       periodSeconds: 3
+# will need Volume & volume mount?

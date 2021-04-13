@@ -1,9 +1,9 @@
 #PHPMYADMIN
 FROM basic_alpine_img
 
-RUN	apk add nginx openssl
+RUN	apk add --no-cache nginx openssl
 
-RUN	apk add php7 php7-fpm php7-mysqli php7-opcache php7-gd php7-zlib \
+RUN	apk add --no-cache php7 php7-fpm php7-mysqli php7-opcache php7-gd php7-zlib \
 	php7-curl php7-mbstring php7-json php7-session
 
 COPY ./srcs .
@@ -19,8 +19,6 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
-# now for PhpMyAdmin
-
 RUN	mkdir -p /var/www/localhost
 
 RUN	wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-english.tar.gz \
@@ -29,25 +27,15 @@ RUN	wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-english.
 	&& mv ./config.inc.php var/www/localhost/phpmyadmin \
 	&& rm -rf phpMyAdmin-5.0.2-english.tar.gz
 
-RUN chown -R nobody:nogroup /var/www/localhost/phpmyadmin
-RUN	chmod +x /var/www/localhost/phpmyadmin/config.inc.php
-
 EXPOSE 5000
 
 RUN	echo "<?php phpinfo();" > info.php && mv info.php /var/www/localhost/phpmyadmin/
 
-# if want access to the shell
-# seems to work better if i run these commands in the start script...
-#RUN	apk add openrc \
-#	&& openrc \
-#	&& touch /run/openrc/softlevel \
-#	&& chmod +x start.sh
 RUN	chmod +x start.sh
 
-#CMD	sh start.sh
+CMD	["sh", "start.sh"]
 
-# add telegraf
-CMD screen -d -m telegraf && php-fpm7 && nginx -g 'daemon off;'
+#CMD screen -d -m telegraf && php-fpm7 && nginx -g 'daemon off;'
 
 
 

@@ -29,13 +29,15 @@ define( 'DB_USER', 'wp_user' );
 define( 'DB_PASSWORD', 'password' );
 
 /** MySQL hostname */
-define( 'DB_HOST', 'mysql_service' );
+define( 'DB_HOST', 'mysql-service' );
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
+
+
 
 /**#@+
  * Authentication Unique Keys and Salts.
