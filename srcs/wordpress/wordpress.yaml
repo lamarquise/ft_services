@@ -1,57 +1,68 @@
-apiVersion: v1
-kind: Service
-metadata:
- name: wordpress-service
- annotations:
-  metallb.universe.tf/allow-shared-ip: metallb
-#  metaldb.universe.tf/allow-shared-ip: shared
-spec:
- type: LoadBalancer
- selector:
-  app: wordpress
- ports:
- - protocol: TCP
-   port: 5050
-   targetPort: 5050
-#   name: wordpress-service-port
----
+# Celia's that i modified a bit
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: wordpress
- labels:
-  app: wordpress
+  name: wordpress-deploy
+  labels:
+    app: wordpress-app
 spec:
- replicas: 1
- selector:
-  matchLabels:
-   app: wordpress
- template:
-  metadata:
-   labels:
-    app: wordpress
-  spec:
-   containers:
-   - name: wordpress
-     image: wordpress_img
-     imagePullPolicy: Never
-     ports:
-     - containerPort: 5050
-#     livenessProbe:
-#      httpGet:
-#       path: /
-#       port: 5050
-#      initialDelaySeconds: 5
-#      periodSeconds: 5
-     env:
-     - name: INFLUX_DB
-       value: influxdb-service.default.svc.cluster.local
-     - name: DB_NAME
-       value: "wordpress"
-     - name: DB_HOST
-#       value: mysql-service.default.svc.cluster.local
-       value: "mysql-service"
-     - name: DB_USER
-       value: "wp_user"
-     - name: DB_PASSWORD
-       value: "password"
+  selector:
+    matchLabels:
+      app: wordpress-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: wordpress_img
+        name: wordpress
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5050
+          name: http
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5050
+          initialDelaySeconds: 30
+          periodSeconds: 5
+        env:
+        - name: DB_NAME
+          value: "wordpress"
+        - name: DB_HOST
+          value: "mysql-service"
+        - name: DB_USER
+          value: "wp_user"
+ #         valueFrom:
+ #               secretKeyRef:
+ #                 name: auth-secrets
+ #                 key: user
+        - name: DB_PASSWORD
+          value: "password"
+ #         valueFrom:
+#               secretKeyRef:
+ #                 name: auth-secrets
+  #                key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+  name: wordpress-svc
+  labels:
+    app: wordpress-app
+spec:
+  selector:
+    app: wordpress-app
+  ports:
+    - port: 5050
+      targetPort: 5050
+      name: http
+  type: LoadBalancer

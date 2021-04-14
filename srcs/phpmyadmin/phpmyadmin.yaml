@@ -1,62 +1,64 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: phpmyadmin
- labels:
-  app: phpmyadmin
+  name: phpmyadmin-deploy
+  labels:
+    app: phpmyadmin-app
 spec:
- replicas: 1
- selector:
-  matchLabels:
-   app: phpmyadmin
- strategy:
-  type: Recreate
- template:
-  metadata:
-   labels:
-    app: phpmyadmin
-  spec:
-   restartPolicy: Always
-   containers:
-   - name: phpmyadmin
-     image: phpmyadmin_img
-     imagePullPolicy: Never
-     ports:
-     - containerPort: 5000
-#     livenessProbe:
-#       httpGet:
-#        path: /phpmyadmin
-#        port: 5000
-#       initialDelaySeconds: 5
-#       periodSeconds: 5
-     env:
-     - name: DB_USER
-       value: root
-     - name: DB_PASSWORD
-       value: password
-     - name: DB_HOST
-#       value: mysql-service.default.svc.cluster.local
-       value: "mysql-service"
-     - name: DB_PORT
-       value: "3306"
-#       env:
-#     - name: INFLUX_DB
-#       value: influxdb-service.default.svc.cluster.local
+  selector:
+    matchLabels:
+      app: phpmyadmin-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: phpmyadmin_img
+        name: phpmyadmin
+        ports:
+        - containerPort: 5000
+          name: http
+        env:
+          - name: DB_USER
+            value: "wp_user"
+ #           valueFrom:
+  #               name: auth-secrets
+    #              key: user
+          - name: DB_PASSWORD
+            value: "password"
+ #           valueFrom:
+  #              secretKeyRef:
+   #               name: auth-secrets
+    #              key: password
+          - name: DB_HOST
+            value: "mysql-service"
+          - name: DB_PORT
+            value: "3306"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 5
+        imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
- name: phpmyadmin-service
- annotations:
-  metallb.universe.tf/allow-shared-ip: metallb
-#  metallb.universe.tf/allow-shared-ip: sharing key
-#  metallb.universe.tf/allow-shared-ip: shared
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+  name: phpmyadmin-svc
+  labels:
+    app: phpmyadmin-app
 spec:
- type: LoadBalancer
- selector:
-  app: phpmyadmin
- ports:
- - protocol: TCP
-   port: 5000
-   targetPort: 5000
-#   name: phpmyadmin-service-port
+  selector:
+    app: phpmyadmin-app
+  ports:
+    - port: 5000
+      targetPort: 5000
+      name: http
+  type: LoadBalancer

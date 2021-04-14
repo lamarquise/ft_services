@@ -58,7 +58,7 @@ kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/metallb.yaml
 
 # order matters?
-docker build -t basic_alpine_img ./srcs/basic_alpine
+#docker build -t basic_alpine_img ./srcs/basic_alpine
 
 #docker build -t influxdb_img ./srcs/influxdb
 #kubectl apply -f ./srcs/influxdb/influxdb.yaml

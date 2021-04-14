@@ -1,10 +1,16 @@
 #PHPMYADMIN
-FROM basic_alpine_img
+#FROM basic_alpine_img
 
-RUN	apk add --no-cache nginx openssl
+#RUN	apk add --no-cache nginx openssl
 
-RUN	apk add --no-cache php7 php7-fpm php7-mysqli php7-opcache php7-gd php7-zlib \
-	php7-curl php7-mbstring php7-json php7-session
+#RUN	apk add --no-cache php7 php7-fpm php7-mysqli php7-opcache php7-gd php7-zlib \
+#	php7-curl php7-mbstring php7-json php7-session
+
+FROM alpine:latest
+
+RUN apk update \
+	&& apk add --no-cache openssl nginx php7 php7-fpm php7-opcache php7-gd php7-mysqli \
+    	php7-zlib php7-curl php7-mbstring php7-json php7-session phpmyadmin
 
 COPY ./srcs .
 

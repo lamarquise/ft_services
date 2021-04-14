@@ -1,69 +1,77 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-vol-clm
+  name: mariadb-vol-clm
   labels:
-    app: mysql
+    app: mariadb-app
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
----
-apiVersion: v1
-kind: Service
-metadata:
- name: mysql-service
- annotations:
-  metallb.universe.tf/allow-shared-ip: metallb
-spec:
-# type: ClusterIP
- type: LoadBalancer
- selector:
-  app: mysql
- ports:
- - protocol: TCP
-   port: 3306
-   targetPort: 3306
-#   name: mysql-service-port
+      storage: 8Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: mysql
- labels:
-  app: mysql
+  name: mariadb-deploy
 spec:
- strategy:
-  type: Recreate
- replicas: 1
- selector:
-  matchLabels:
-   app: mysql
- template:
-  metadata:
-   labels:
-    app: mysql
-  spec:
-   restartPolicy: Always
-   containers:
-   - name: mysql
-     image: mysql_img:latest
-     imagePullPolicy: Never
-     ports:
-     - containerPort: 3306
-#     livenessProbe:
-#       exec:
-#        command:
-#          - sh
-#          - livenessprobe.sh
-#       initialDelaySeconds: 30
-#       periodSeconds: 3
-     volumeMounts:
-       - name: mysql-vol
-         mountPath: /var/lib/mysql
-   volumes:
-     - name: mysql-vol
-       persistentVolumeClaim:
-         claimName: mysql-vol-clm
+  selector:
+    matchLabels:
+      app: mariadb-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: mariadb
+        image: mysql_img:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3306
+          name: mysql
+        env:
+          - name: DB_USER
+            value: "wp_user"
+ #           valueFrom:
+  #              secretKeyRef:
+   #               name: auth-secrets
+    #              key: user
+          - name: DB_PASSWORD
+            value: "password"
+  #          valueFrom:
+   #             secretKeyRef:
+    #              name: auth-secrets
+     #             key: password
+        livenessProbe:
+            exec:
+              command:
+                - sh
+                - livenessprobe.sh
+            initialDelaySeconds: 30
+            periodSeconds: 3
+        volumeMounts:
+        - name: mariadb-vol
+          mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-vol
+          persistentVolumeClaim:
+            claimName: mariadb-vol-clm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mariadb-app
+spec:
+  selector:
+    app: mariadb-app
+  type: ClusterIP
+  ports:
+    - port: 3306
+      name: mysql
