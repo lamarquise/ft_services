@@ -1,3 +1,5 @@
+# Celia's that i modified a bit
+
 
 apiVersion: apps/v1
 kind: Deployment
@@ -34,17 +36,19 @@ spec:
         - name: DB_NAME
           value: "wordpress"
         - name: DB_HOST
-          value: "mariadb-svc"
+          value: "mysql-service"
         - name: DB_USER
-          valueFrom:
-                secretKeyRef:
-                  name: auth-secrets
-                  key: user
+          value: "wp_user"
+ #         valueFrom:
+ #               secretKeyRef:
+ #                 name: auth-secrets
+ #                 key: user
         - name: DB_PASSWORD
-          valueFrom:
-                secretKeyRef:
-                  name: auth-secrets
-                  key: password
+          value: "password"
+ #         valueFrom:
+#               secretKeyRef:
+ #                 name: auth-secrets
+  #                key: password
 ---
 apiVersion: v1
 kind: Service

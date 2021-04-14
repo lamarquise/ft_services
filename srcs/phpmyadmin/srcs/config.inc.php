@@ -32,7 +32,8 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 // Im gonna guess this needs to be 'mysql_service' instead of 'localhost'
 
 $cfg['Servers'][$i]['compress'] = false;
-$cfg['Servers'][$i]['AllowNoPassword'] = true;
+//$cfg['Servers'][$i]['AllowNoPassword'] = true;
+$cfg['Servers'][$i]['AllowNoPassword'] = false;
 
 $cfg['Servers'][1]['host'] = getenv('DB_HOST');
 $cfg['Servers'][1]['port'] = getenv('DB_PORT');
