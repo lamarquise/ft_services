@@ -54,32 +54,33 @@ data:
 
 #echo "    - $node_ip-$node_ip" >> ./srcs/metallb.yaml
 
+kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/metallb.yaml
 
 # order matters?
 docker build -t basic_alpine_img ./srcs/basic_alpine
 
-#docker build -t influxdb_img ./srcs/influxdb
+docker build -t influxdb_img ./srcs/influxdb
 #kubectl apply -f ./srcs/influxdb/influxdb.yaml
 #kubectl delete -f ./srcs/influxdb/influxdb.yaml
 
-docker build -t mysql_img ./srcs/mysql
-kubectl apply -f ./srcs/mysql/mysql.yaml
+#docker build -t mysql_img ./srcs/mysql
+#kubectl apply -f ./srcs/mysql/mysql.yaml
 #kubectl delete -f ./srcs/mysql/mysql.yaml
 
-docker build -t phpmyadmin_img ./srcs/phpmyadmin
-kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
+#docker build -t phpmyadmin_img ./srcs/phpmyadmin
+#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 #kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
 
-docker build -t wordpress_img ./srcs/wordpress
-kubectl apply -f ./srcs/wordpress/wordpress.yaml
+#docker build -t wordpress_img ./srcs/wordpress
+#kubectl apply -f ./srcs/wordpress/wordpress.yaml
 #kubectl delete -f ./srcs/wordpress/wordpress.yaml
 
-docker build -t nginx_img ./srcs/nginx
-kubectl apply -f ./srcs/nginx/nginx.yaml
+#docker build -t nginx_img ./srcs/nginx
+#kubectl apply -f ./srcs/nginx/nginx.yaml
 #kubectl delete -f ./srcs/nginx/nginx.yaml
 
-#docker build -t grafana_img ./srcs/grafana
+docker build -t grafana_img ./srcs/grafana
 #kubectl apply -f ./srcs/grafana/grafana.yaml
 #kubectl delete -f ./srcs/grafana/grafana.yaml
 

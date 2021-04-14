@@ -1,8 +1,7 @@
 #FTPS
-
 FROM	basic_alpine_img
 
-RUN	apk add vsftpd openssl
+RUN	apk add --no-cache vsftpd openssl
 
 RUN	mkdir -p /etc/ssl/private
 

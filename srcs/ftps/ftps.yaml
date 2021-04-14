@@ -27,11 +27,30 @@ spec:
        value: influxdb-service.default.svc.cluster.local
      - name: NODE_IP
         value: ftps-service.default.svc.cluster.local
-#		Im pretty sure this thing above won't work...
-#
-# svc stands for service, so this path might be wrong...
-# IDK if this will work... could put in the IP# instead of using a var...
-#        value: status.hostIP
+     livenessProbe:
+      exec:
+       command:
+       - pgrep
+       - vsftpd
+     volumeMounts:
+     - mountPath: "/home/"
+       subPath: "ftps"
+       name: ftps-vol
+   volumes:
+   - name: ftps-vol
+     persistentVolumeClaim:
+      claimName: ftps-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ftps-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service

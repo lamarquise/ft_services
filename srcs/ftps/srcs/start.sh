@@ -1,16 +1,14 @@
 #!/bin/sh
 
-# mostly for test purposes
-
 # consider doing this in the Dockerfile
-apk add openrc
-openrc
-touch /run/openrc/softlevel
+#apk add openrc
+#openrc
+#touch /run/openrc/softlevel
 
+
+#Celia does adduser stuff here...
 
 #service vsftpd restart
+/usr/sbin/vsftpd /etc/vsftpd.conf
 
-
-
-
-sh
+tail -F /dev/null

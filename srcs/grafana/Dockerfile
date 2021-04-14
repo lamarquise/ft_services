@@ -1,22 +1,23 @@
 #GRAFANA
 FROM basic_alpine_img
 
-RUN	apk add grafana
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN	apk add --no-cache grafana
 
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
-WORKDIR /usr/share/grafana
 
-# add all the config files... when you have them
+# Grafana Config files copied a l'identique from Celia's for now
+COPY srcs/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
+COPY srcs/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
+COPY srcs/dashboards /usr/share/grafana/dashboards
 
-	# for testing
-COPY ./srcs/start.sh .
-RUN	chmod +x start.sh
-
+WORKDIR /usr/share/grafana/conf
 
 EXPOSE	3000
 
-# for testing
-#CMD	./start.sh
 
-CMD	screen -d -m telegraf && grafana-server
+#CMD	screen -d -m telegraf && grafana-server
+
+	# if you do telegraf her way...
+CMD	["grafana-server"]

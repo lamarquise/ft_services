@@ -1,4 +1,16 @@
-# will need Persistent Volume Claim here
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-vol-clm
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -34,7 +46,7 @@ spec:
    restartPolicy: Always
    containers:
    - name: mysql
-     image: mysql_img
+     image: mysql_img:latest
      imagePullPolicy: Never
      ports:
      - containerPort: 3306
@@ -45,4 +57,10 @@ spec:
           - livenessprobe.sh
        initialDelaySeconds: 30
        periodSeconds: 3
-# will need Volume & volume mount?
+     volumeMounts:
+       - name: mysql-vol
+         mountPath: /var/lib/mysql
+   volumes:
+     - name: mysql-vol
+       persistentVolumeClaim:
+         claimName: mysql-vol-clm
