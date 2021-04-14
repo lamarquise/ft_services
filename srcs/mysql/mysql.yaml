@@ -15,10 +15,11 @@ apiVersion: v1
 kind: Service
 metadata:
  name: mysql-service
- annotations:
-  metallb.universe.tf/allow-shared-ip: metallb
+# annotations:
+#  metallb.universe.tf/allow-shared-ip: metallb
 spec:
- type: LoadBalancer
+ type: ClusterIP
+# type: LoadBalancer
  selector:
   app: mysql
  ports:
@@ -57,7 +58,7 @@ spec:
         command:
           - sh
           - livenessprobe.sh
-       initialDelaySeconds: 5000
+       initialDelaySeconds: 30
        periodSeconds: 3
      volumeMounts:
        - name: mysql-vol

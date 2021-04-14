@@ -40,3 +40,11 @@ spec:
      env:
      - name: INFLUX_DB
        value: influxdb-service.default.svc.cluster.local
+     - name: DB_NAME
+       value: "wordpress"
+     - name: DB_HOST
+       value: "mysql-service"
+     - name: DB_USER
+       value: "wp_user"
+     - name: DB_PASSWORD
+       value: "password"

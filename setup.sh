@@ -72,7 +72,7 @@ docker build -t phpmyadmin_img ./srcs/phpmyadmin
 #kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 #kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
 
-#docker build -t wordpress_img ./srcs/wordpress
+docker build -t wordpress_img ./srcs/wordpress
 #kubectl apply -f ./srcs/wordpress/wordpress.yaml
 #kubectl delete -f ./srcs/wordpress/wordpress.yaml
 
