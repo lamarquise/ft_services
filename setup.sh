@@ -68,13 +68,13 @@ docker build -t mysql_img ./srcs/mysql
 #kubectl apply -f ./srcs/mysql/mysql.yaml
 #kubectl delete -f ./srcs/mysql/mysql.yaml
 
-docker build -t phpmyadmin_img ./srcs/phpmyadmin
-#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
-#kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
-
 docker build -t wordpress_img ./srcs/wordpress
 #kubectl apply -f ./srcs/wordpress/wordpress.yaml
 #kubectl delete -f ./srcs/wordpress/wordpress.yaml
+
+docker build -t phpmyadmin_img ./srcs/phpmyadmin
+#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
+#kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
 
 #docker build -t nginx_img ./srcs/nginx
 #kubectl apply -f ./srcs/nginx/nginx.yaml

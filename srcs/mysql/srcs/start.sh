@@ -9,7 +9,7 @@ sed -i 's/skip-networking/# skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf
 
 service mariadb restart
 
-
+mysql -u root -e "FLUSH PRIVILEGES;"
 # create the root user who has access to pma
 mysql -u root -e "CREATE USER 'root'@'%' IDENTIFIED BY 'password';"
 mysql -u root -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'password';"
@@ -23,6 +23,18 @@ mysql -u root -e "FLUSH PRIVILEGES;"
 	# these fuck everything up!!!!
 #mysql -u root -e "CREATE USER 'wp_user2'@'%' IDENTIFIED BY 'password';"
 #mysql -u root -e "GRANT ALL ON wordpress.* TO 'wp_user2'@'%' IDENTIFIED BY 'password';"
+
+
+# Creating wordpress database, 
+#mysql --user=root << EOF
+#  FLUSH PRIVILEGES;
+#  CREATE DATABASE wordpress;
+#  DROP DATABASE test;
+#  CREATE USER 'wp_user'@'%' IDENTIFIED BY 'password';
+#  GRANT ALL ON wordpress.* TO 'wp_user'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+#  FLUSH PRIVILEGES;
+EOF
+
 
 # Import wordpress database
 	# Ask Celia how to do this!!!

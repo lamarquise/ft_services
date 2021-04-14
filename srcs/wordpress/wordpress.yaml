@@ -3,8 +3,8 @@ kind: Service
 metadata:
  name: wordpress-service
  annotations:
-#  metallb.universe.tf/allow-shared-ip: metallb
-  metaldb.universe.tf/allow-shared-ip: shared
+  metallb.universe.tf/allow-shared-ip: metallb
+#  metaldb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer
  selector:
@@ -13,7 +13,7 @@ spec:
  - protocol: TCP
    port: 5050
    targetPort: 5050
-   name: wordpress-service-port
+#   name: wordpress-service-port
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,12 +37,19 @@ spec:
      imagePullPolicy: Never
      ports:
      - containerPort: 5050
+#     livenessProbe:
+#      httpGet:
+#       path: /
+#       port: 5050
+#      initialDelaySeconds: 5
+#      periodSeconds: 5
      env:
      - name: INFLUX_DB
        value: influxdb-service.default.svc.cluster.local
      - name: DB_NAME
        value: "wordpress"
      - name: DB_HOST
+#       value: mysql-service.default.svc.cluster.local
        value: "mysql-service"
      - name: DB_USER
        value: "wp_user"
