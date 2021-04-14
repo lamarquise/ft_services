@@ -31,9 +31,13 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 
 // Im gonna guess this needs to be 'mysql_service' instead of 'localhost'
 
-$cfg['Servers'][$i]['host'] = 'mysql-service';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
+
+$cfg['Servers'][1]['host'] = getenv('DB_HOST');
+$cfg['Servers'][1]['port'] = getenv('DB_PORT');
+$cfg['Servers'][1]['user'] = getenv('DB_USER');
+$cfg['Servers'][1]['password'] = getenv('DB_PASSWORD');
 
 /**
  * phpMyAdmin configuration storage settings.

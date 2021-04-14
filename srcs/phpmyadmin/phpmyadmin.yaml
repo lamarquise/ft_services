@@ -9,6 +9,8 @@ spec:
  selector:
   matchLabels:
    app: phpmyadmin
+ strategy:
+  type: Recreate
  template:
   metadata:
    labels:
@@ -27,7 +29,16 @@ spec:
         port: 5000
        initialDelaySeconds: 30
        periodSeconds: 5
-     #     env:
+     env:
+     - name: DB_USER
+       value: root
+     - name: DB_PASSWORD
+       value: password
+     - name: DB_HOST
+       value: "mysql-service"
+     - name: DB_PORT
+       value: "3306"
+#       env:
 #     - name: INFLUX_DB
 #       value: influxdb-service.default.svc.cluster.local
 ---
@@ -36,9 +47,9 @@ kind: Service
 metadata:
  name: phpmyadmin-service
  annotations:
-  metallb.universe.tf/allow-shared-ip: metallb
+#  metallb.universe.tf/allow-shared-ip: metallb
 #  metallb.universe.tf/allow-shared-ip: sharing key
-#  metallb.universe.tf/allow-shared-ip: shared
+  metallb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer
  selector:
