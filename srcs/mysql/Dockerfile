@@ -4,12 +4,12 @@ FROM basic_alpine_img
 RUN	apk add --no-cache mariadb mariadb-client openrc
 
 # Either this goes here or in start.sh
-#RUN openrc && touch /run/openrc/softlevel && mkdir -p /run/mysqld
-#RUN	/etc/init.d/mariadb setup
+RUN openrc && touch /run/openrc/softlevel && mkdir -p /run/mysqld
+RUN	/etc/init.d/mariadb setup
 	# Don't need the my.cnf if the PHP core dump
 	# to .sql works
-#COPY ./srcs/my.cnf /etc/mysql/my.cnf
-#RUN	chmod 0444 /etc/my.cnf
+COPY ./srcs/my.cnf /etc/mysql/my.cnf
+RUN	chmod 0444 /etc/my.cnf
 
 	#From Celia
 #COPY ./srcs/wp-db.sql wp-db.sql
@@ -22,4 +22,5 @@ RUN chmod +x start.sh
 
 EXPOSE 3306
 
-CMD ["sh", "start.sh"]
+CMD tail -F /dev/null
+#CMD ["sh", "start.sh"]
