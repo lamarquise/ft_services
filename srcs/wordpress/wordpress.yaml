@@ -1,4 +1,4 @@
-
+# Celia's that i modified a lot
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,19 +32,47 @@ spec:
           periodSeconds: 5
         env:
         - name: DB_NAME
-          value: "wordpress"
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_db_name 
+        - name: ADMIN_WP_USER
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_admin
+        - name: ADMIN_WP_PASS
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_admin_pass
         - name: DB_HOST
-          value: "mariadb-svc"
+          value: "mysql-service"
         - name: DB_USER
           valueFrom:
-                secretKeyRef:
-                  name: auth-secrets
-                  key: user
+           configMapKeyRef:
+            name: my-vars
+            key: wp_user1
+ #         value: "wp_user"
         - name: DB_PASSWORD
           valueFrom:
-                secretKeyRef:
-                  name: auth-secrets
-                  key: password
+           configMapKeyRef:
+            name: my-vars
+            key: wp_u1_pass
+        - name: DB_USER2
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_user2
+        - name: DB_PASSWORD2
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_u2_pass
+        - name: NODE_IP
+          valueFrom:
+           fieldRef:
+            fieldPath: status.hostIP
 ---
 apiVersion: v1
 kind: Service

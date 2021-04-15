@@ -1,0 +1,15 @@
+# this where where i keep all the og env vars
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: my-vars
+data:
+ wp_db_name: wordpress
+ wp_admin: wp_user
+ wp_admin_pass: password
+ wp_user1: wp_user1
+ wp_u1_pass: password
+ wp_user2: wp_user2
+ wp_u2_pass: password
+ root_user: root
+ root_pass: password

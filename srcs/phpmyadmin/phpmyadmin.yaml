@@ -23,21 +23,31 @@ spec:
         - containerPort: 5000
           name: http
         env:
-          - name: DB_USER
-            value: "wp_user"
- #           valueFrom:
-  #               name: auth-secrets
-    #              key: user
-          - name: DB_PASSWORD
-            value: "password"
- #           valueFrom:
-  #              secretKeyRef:
-   #               name: auth-secrets
-    #              key: password
-          - name: DB_HOST
-            value: "mysql-service"
-          - name: DB_PORT
-            value: "3306"
+        - name: ROOT_USER
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: root_user
+        - name: ROOT_PASS
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: root_pass
+        - name: DB_USER
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_user1
+ #         value: "wp_user"
+        - name: DB_PASSWORD
+          valueFrom:
+           configMapKeyRef:
+            name: my-vars
+            key: wp_u1_pass
+        - name: DB_HOST
+          value: "mysql-service"
+        - name: DB_PORT
+          value: "3306"
         livenessProbe:
           httpGet:
             path: /

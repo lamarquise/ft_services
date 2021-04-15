@@ -1,8 +1,11 @@
 #!/bin/bash
+
+##### My Version of Celia's setup.sh that works with my files ########
+
 Red="\e[31m"
 Green="\e[32m"
 Default="\e[0m\n"
-#services="mariadb wordpress phpmyadmin nginx ftps influxdb telegraf grafana"
+#services="mysql wordpress phpmyadmin nginx ftps influxdb telegraf grafana"
 services="mysql wordpress"
 
 printf "FT_SERVICES de celeloup\n\n"
@@ -49,8 +52,8 @@ fi
 printf "\n\t--- Starting Minikube ---\n"
 minikube delete > /dev/null
 rm -rf ~/.minikube
-minikube start --vm-driver=docker && \
-#minikube start --driver=hyperkit && \
+#minikube start --vm-driver=docker && \
+minikube start --driver=hyperkit && \
 	printf "Minikube started\n" || { printf "Minikube start failed\n" && exit 1; }
 
 minikube addons enable metallb
