@@ -19,7 +19,7 @@ mysql --user=root << EOF
 EOF
 
 # Import wordpress database
-#mysql --user=root wordpress < wp-db.sql
+mysql --user=root wordpress < wp-db.sql
 
 printf "Database started !\n"
 
