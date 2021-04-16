@@ -13,7 +13,7 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: grafana
     # <bool> allow users to edit datasources from the UI.
     editable: false
   - name: Ftps
@@ -24,7 +24,7 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: ftps
     # <bool> allow users to edit datasources from the UI.
     editable: false
   - name: Mysql
@@ -35,7 +35,7 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: mysql
     # <bool> allow users to edit datasources from the UI.
     editable: false
   - name: Nginx
@@ -46,7 +46,7 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: nginx
     # <bool> allow users to edit datasources from the UI.
     editable: false
   - name: Phpmyadmin
@@ -57,7 +57,7 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: phpmyadmin
     # <bool> allow users to edit datasources from the UI.
     editable: false
   - name: Wordpress
@@ -68,7 +68,7 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: wordpress
     # <bool> allow users to edit datasources from the UI.
     editable: false
   - name: Influxdb
@@ -79,6 +79,6 @@ datasources:
     # <string> url
     url: http://influxdb-service:8086
     # <string> database name, if used
-    database: telegraf
+    database: influxdb
     # <bool> allow users to edit datasources from the UI.
     editable: false
