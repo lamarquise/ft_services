@@ -88,4 +88,4 @@ echo "FTPS: $node_ip User:'user' Password:'password'"
 echo "Grafana: http://$node_ip:3000"
 echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086"
 
-#minikube dashboard
+minikube dashboard
