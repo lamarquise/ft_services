@@ -78,7 +78,7 @@ metadata:
   app: mysql-app
 spec:
  selector:
-  app: mysql
+  app: mysql-app
  type: ClusterIP
  ports:
  - port: 3306
