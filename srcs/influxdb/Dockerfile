@@ -5,14 +5,10 @@ RUN	apk add --no-cache influxdb
 
 EXPOSE 8086
 
+RUN mkdir -p /etc/influxdb && mv /etc/influxdb.conf /etc/influxdb/influxdb.conf
+
 COPY ./srcs/livenessprobe.sh livenessprobe.sh
 
-	# not if i do celia's thing for telegraf...
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
-
-#RUN apk add openrc
-#RUN openrc & touch /run/openrc/softlevel
-
-#CMD tail -F /dev/null
 
 CMD	screen -d -m telegraf && influxd

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# docker credencials in kubernetes... I hate this
-#
-
-
 minikube delete
 
 if [ $OSTYPE = "linux-gnu" ]; then
@@ -12,7 +8,7 @@ if [ $OSTYPE = "linux-gnu" ]; then
 	if [[ $? == 1 ]]; then
 		printf "Your docker isn't working. Attempting to fix it now .....\n"
 		sudo usermod -aG docker $(whoami);
-		printf "Should be fixed now. Log off and on again please.\n"
+		printf "Should be fixed now. Log off and back on please.\n"
 		exit 1;
 	else
 		printf "Docker is working !\n";
@@ -30,10 +26,6 @@ fi
 
 # if you don't do this, none of the containers can get made
 eval $(minikube -p minikube docker-env)
-
-	# Do i want this?
-# so telegraf can collect datas from the cluster
-#minikube addons enable metrics-server
 
 minikube addons enable metallb
 
@@ -61,10 +53,6 @@ docker build -t basic_alpine_img ./srcs/basic_alpine
 docker build -t influxdb_img ./srcs/influxdb
 kubectl apply -f ./srcs/influxdb/influxdb.yaml
 #kubectl delete -f ./srcs/influxdb/influxdb.yaml
-
-# do i want this here to? for Volume provisioning?
-# Yea this is a good idea...
-#sleep 30;
 
 docker build -t mysql_img ./srcs/mysql
 kubectl apply -f ./srcs/mysql/mysql.yaml
@@ -97,10 +85,7 @@ echo "Nginx: http://$node_ip"
 echo "Wordpress: https://$node_ip:5050"
 echo "Phpmyadmin: https://$node_ip:5000"
 echo "FTPS: $node_ip User:'user' Password:'password'"
+echo "Grafana: http://$node_ip:3000"
+echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086"
 
-	# are these still gonna be relevant?
-echo "Grafana: http://$node_ip:3000 User:'admin' Password:'admin'"
-
-echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086 Database: 'telegraf'"
-
-minikube dashboard
+#minikube dashboard
