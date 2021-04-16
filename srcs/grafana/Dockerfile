@@ -7,8 +7,8 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 RUN	apk add --no-cache grafana
 
 # added this...
-RUN apk add --no-cache openssl
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/ssl/localhost.pem -keyout /etc/ssl/localhost.key -subj "/C=FR/ST=Paris/L=Paris/O=Grafana K8s FT/OU=erlazo/CN=localhost"
+#RUN apk add --no-cache openssl
+#RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/ssl/localhost.pem -keyout /etc/ssl/localhost.key -subj "/C=FR/ST=Paris/L=Paris/O=Grafana K8s FT/OU=erlazo/CN=localhost"
 
 
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf

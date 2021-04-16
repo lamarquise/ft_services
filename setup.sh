@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# docker credencials in kubernetes... I hate this
+#
+
+
 minikube delete
 
 if [ $OSTYPE = "linux-gnu" ]; then

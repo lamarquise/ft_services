@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
  name: grafana
  labels:
-  app: grafana
+  app: grafana-app
 spec:
  replicas: 1
  selector:
   matchLabels:
-   app: grafana
+   app: grafana-app
  strategy:
   type: Recreate
  template:
   metadata:
    labels:
-    app: grafana
+    app: grafana-app
   spec:
    restartPolicy: Always
    containers:
@@ -54,7 +54,7 @@ metadata:
 spec:
  type: LoadBalancer
  selector:
-  app: grafana
+  app: grafana-app
  externalTrafficPolicy: Cluster
  ports:
  - protocol: TCP
