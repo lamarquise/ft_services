@@ -24,21 +24,14 @@ else
 	minikube start
 fi
 
-
 # if you don't do this, none of the containers can get made
 eval $(minikube -p minikube docker-env)
 
 	# Do i want this?
 # so telegraf can collect datas from the cluster
-minikube addons enable metrics-server
+#minikube addons enable metrics-server
 
-	# Consider using this...
 minikube addons enable metallb
-
-# OR if the kubectl method of doing metalDB
-#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/namespace.yaml
-#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/metallb.yaml
-#kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
 node_ip=$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)
 
@@ -55,13 +48,10 @@ data:
       addresses:
       - $node_ip-$node_ip" > ./srcs/metallb.yaml
 
-#echo "    - $node_ip-$node_ip" >> ./srcs/metallb.yaml
-
 kubectl apply -f ./srcs/config_map.yaml
 kubectl apply -f ./srcs/secrets.yaml
 kubectl apply -f ./srcs/metallb.yaml
 
-# order matters?
 docker build -t basic_alpine_img ./srcs/basic_alpine
 
 docker build -t influxdb_img ./srcs/influxdb
@@ -75,9 +65,9 @@ kubectl apply -f ./srcs/influxdb/influxdb.yaml
 #docker build -t mysql_img ./srcs/mysql
 #kubectl apply -f ./srcs/mysql/mysql.yaml
 #kubectl delete -f ./srcs/mysql/mysql.yaml
-# might make this 60 before i submit just incase someone else
-# has a shit computer...
-#sleep 30;
+
+echo "Wait 30 seconds for MySQL to finish provisioning it's volume."
+sleep 30;
 
 #docker build -t phpmyadmin_img ./srcs/phpmyadmin
 #kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
@@ -102,10 +92,11 @@ kubectl apply -f ./srcs/grafana/grafana.yaml
 echo "Nginx: http://$node_ip"
 echo "Wordpress: https://$node_ip:5050"
 echo "Phpmyadmin: https://$node_ip:5000"
-#echo "Wordpress: https://$node_ip:5050"
 echo "FTPS: $node_ip User:'user' Password:'password'"
-echo "Grafana: http://$node_ip:3000 User:'admin' Password:'admin'"
-echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086 Database: 'telegraf'"
 
+	# are these still gonna be relevant?
+echo "Grafana: http://$node_ip:3000 User:'admin' Password:'admin'"
+
+echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086 Database: 'telegraf'"
 
 #minikube dashboard
