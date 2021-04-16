@@ -16,6 +16,3 @@ COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 #CMD tail -F /dev/null
 
 CMD	screen -d -m telegraf && influxd
-
-#if i do celia's thing for Telegraf
-#CMD	["influxd", "run"]

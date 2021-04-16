@@ -54,35 +54,35 @@ kubectl apply -f ./srcs/metallb.yaml
 
 docker build -t basic_alpine_img ./srcs/basic_alpine
 
-#docker build -t influxdb_img ./srcs/influxdb
-#kubectl apply -f ./srcs/influxdb/influxdb.yaml
+docker build -t influxdb_img ./srcs/influxdb
+kubectl apply -f ./srcs/influxdb/influxdb.yaml
 #kubectl delete -f ./srcs/influxdb/influxdb.yaml
 
 # do i want this here to? for Volume provisioning?
 # Yea this is a good idea...
 #sleep 30;
 
-docker build -t mysql_img ./srcs/mysql
-kubectl apply -f ./srcs/mysql/mysql.yaml
+#docker build -t mysql_img ./srcs/mysql
+#kubectl apply -f ./srcs/mysql/mysql.yaml
 #kubectl delete -f ./srcs/mysql/mysql.yaml
 
 echo "Wait 30 seconds for MySQL to finish provisioning it's volume."
-sleep 30;
+#sleep 30;
 
-docker build -t phpmyadmin_img ./srcs/phpmyadmin
-kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
+#docker build -t phpmyadmin_img ./srcs/phpmyadmin
+#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 #kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
 
-docker build -t wordpress_img ./srcs/wordpress
-kubectl apply -f ./srcs/wordpress/wordpress.yaml
+#docker build -t wordpress_img ./srcs/wordpress
+#kubectl apply -f ./srcs/wordpress/wordpress.yaml
 #kubectl delete -f ./srcs/wordpress/wordpress.yaml
 
 #docker build -t nginx_img ./srcs/nginx
 #kubectl apply -f ./srcs/nginx/nginx.yaml
 #kubectl delete -f ./srcs/nginx/nginx.yaml
 
-#docker build -t grafana_img ./srcs/grafana
-#kubectl apply -f ./srcs/grafana/grafana.yaml
+docker build -t grafana_img ./srcs/grafana
+kubectl apply -f ./srcs/grafana/grafana.yaml
 #kubectl delete -f ./srcs/grafana/grafana.yaml
 
 #docker build -t ftps_img ./srcs/ftps
@@ -99,4 +99,4 @@ echo "Grafana: http://$node_ip:3000 User:'admin' Password:'admin'"
 
 echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086 Database: 'telegraf'"
 
-minikube dashboard
+#minikube dashboard
