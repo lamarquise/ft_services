@@ -25,9 +25,12 @@ else
 fi
 
 
-# if you don't do this, non of the containers can get made
+# if you don't do this, none of the containers can get made
 eval $(minikube -p minikube docker-env)
 
+	# Do i want this?
+# so telegraf can collect datas from the cluster
+minikube addons enable metrics-server
 
 	# Consider using this...
 minikube addons enable metallb
@@ -66,12 +69,12 @@ kubectl apply -f ./srcs/influxdb/influxdb.yaml
 #kubectl delete -f ./srcs/influxdb/influxdb.yaml
 
 # do i want this here to? for Volume provisioning?
+# Yea this is a good idea...
 #sleep 30;
 
 #docker build -t mysql_img ./srcs/mysql
 #kubectl apply -f ./srcs/mysql/mysql.yaml
 #kubectl delete -f ./srcs/mysql/mysql.yaml
-
 # might make this 60 before i submit just incase someone else
 # has a shit computer...
 #sleep 30;
@@ -96,20 +99,13 @@ kubectl apply -f ./srcs/grafana/grafana.yaml
 #kubectl apply -f ./srcs/ftps/ftps.yaml
 #kubectl delete -f ./srcs/ftps/ftps.yaml
 
-# do i want this here to? for Volume provisioning?
-#sleep 30;
-
 echo "Nginx: http://$node_ip"
 echo "Wordpress: https://$node_ip:5050"
 echo "Phpmyadmin: https://$node_ip:5000"
 #echo "Wordpress: https://$node_ip:5050"
 echo "FTPS: $node_ip User:'user' Password:'password'"
 echo "Grafana: http://$node_ip:3000 User:'admin' Password:'admin'"
-echo "Datasource in Grafana from IndluxDB: http://$node_ip:8086 Database: 'telegraf'"
+echo "Datasource in Grafana from IndluxDB: http://influxdb-service:8086 Database: 'telegraf'"
 
 
-#echo https://$node_ip
-# at the end
 #minikube dashboard
-
-

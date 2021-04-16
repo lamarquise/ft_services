@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
  name: mysql-vol-clm
  labels:
-  app: mysql
+  app: mysql-app
 spec:
  accessModes:
  - ReadWriteOnce
@@ -18,13 +18,13 @@ metadata:
 spec:
  selector:
   matchLabels:
-   app: mysql
+   app: mysql-app
  strategy:
   type: Recreate
  template:
   metadata:
    labels:
-     app: mysql
+     app: mysql-app
   spec:
    restartPolicy: Always
    containers:
@@ -50,7 +50,6 @@ spec:
         configMapKeyRef:
          name: my-vars
          key: wp_user1
- #         value: "wp_user"
      - name: DB_PASSWORD
        valueFrom:
         configMapKeyRef:
@@ -76,7 +75,7 @@ kind: Service
 metadata:
  name: mysql-service
  labels:
-  app: mysql
+  app: mysql-app
 spec:
  selector:
   app: mysql

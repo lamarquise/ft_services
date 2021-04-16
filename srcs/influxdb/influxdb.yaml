@@ -42,7 +42,7 @@ spec:
        command:
        - sh
        - livenessprobe.sh
-      initialDelaySeconds: 15
+      initialDelaySeconds: 600
       periodSeconds: 3
      volumeMounts:
      - name: influxdb-vol

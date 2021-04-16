@@ -10,8 +10,12 @@ COPY ./srcs/livenessprobe.sh livenessprobe.sh
 	# not if i do celia's thing for telegraf...
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
+#RUN apk add openrc
+#RUN openrc & touch /run/openrc/softlevel
 
-#CMD	screen -d -m telegraf && influxdb
+#CMD tail -F /dev/null
+
+CMD	screen -d -m telegraf && influxd
 
 #if i do celia's thing for Telegraf
-CMD	["influxdb", "run"]
+#CMD	["influxd", "run"]

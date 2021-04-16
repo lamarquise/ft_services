@@ -38,7 +38,6 @@ spec:
         configMapKeyRef:
          name: my-vars
          key: wp_user1
-#       value: "wp_user"
      - name: DB_PASSWORD
        valueFrom:
         configMapKeyRef:

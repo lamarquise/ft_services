@@ -5,14 +5,14 @@ metadata:
 spec:
  selector:
   matchLabels:
-   app: ftps
+   app: ftps-app
  template:
   metadata:
    labels:
-    app: ftps
+    app: ftps-app
   spec:
    containers:
-   - name: ftps
+   - name: ftps-app
      image: ftps_img
      imagePullPolicy: Never
      ports:
@@ -68,4 +68,4 @@ spec:
    targetPort: 30022
    protocol: TCP
  selector:
-  app: ftps
+  app: ftps-app

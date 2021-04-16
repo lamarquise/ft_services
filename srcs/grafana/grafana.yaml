@@ -24,9 +24,6 @@ spec:
      ports:
      - containerPort: 3000
      env:
-# DO i still need this?
-     - name: INFLUX_IP
-       value: influxdb-service.default.svc.cluster.local
      - name: GRAFANA_ADMIN_USER
        valueFrom:
         secretKeyRef:
@@ -53,7 +50,6 @@ kind: Service
 metadata:
  name: grafana-service
  annotations:
-#  metallb.universe.tf/allow-shared-ip: metallb
   metallb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer

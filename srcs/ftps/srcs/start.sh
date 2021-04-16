@@ -12,8 +12,7 @@ rc-update add vsftpd default
 rc-service vsftpd restart
 touch /var/log/vsftpd.log
 
-# run telegraf with screen?
-telegraf &
+screen -d -m telegraf
 
 sed  -i 's/NODE_IP/'$NODE_IP'/g' /etc/vsftpd/vsftpd.conf
 

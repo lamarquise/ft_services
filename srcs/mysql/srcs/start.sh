@@ -27,7 +27,6 @@ mysql -u root -e "FLUSH PRIVILEGES;"
 
 printf "Database started !\n"
 
-#screen -d -m telegraf
+screen -d -m telegraf
 
 tail -F /dev/null
-#sh

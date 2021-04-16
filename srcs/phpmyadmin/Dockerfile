@@ -34,8 +34,3 @@ RUN	echo "<?php phpinfo();" > info.php && mv info.php /var/www/localhost/phpmyad
 RUN	chmod +x start.sh
 
 CMD	["sh", "start.sh"]
-
-#CMD screen -d -m telegraf && php-fpm7 && nginx -g 'daemon off;'
-
-
-

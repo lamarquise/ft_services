@@ -17,7 +17,7 @@ WORKDIR /usr/share/grafana/conf
 EXPOSE	3000
 
 
-#CMD	screen -d -m telegraf && grafana-server
+CMD	screen -d -m telegraf && grafana-server
 
 	# if you do telegraf her way...
-CMD	["grafana-server"]
+#CMD	["grafana-server"]
