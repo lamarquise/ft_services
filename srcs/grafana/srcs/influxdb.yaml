@@ -10,9 +10,9 @@ datasources:
     # <bool> enable/disable basic auth
     basicAuth: true
     # <string> basic auth username
-    basicAuthUser: $GRAFANA_ADMIN_USER
+    basicAuthUser: admin
     # <string> Deprecated, use secureJsonData.basicAuthPassword
-    basicAuthPassword: $GRAFANA_ADMIN_PASS
+    basicAuthPassword: admin
     version: 1
     # <bool> allow users to edit datasources from the UI.
     editable: false

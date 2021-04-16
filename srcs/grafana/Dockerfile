@@ -8,11 +8,17 @@ COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 
 # Grafana Config files copied a l'identique from Celia's for now
-#COPY srcs/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
-#COPY srcs/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
-#COPY srcs/dashboards /usr/share/grafana/dashboards
+COPY ./srcs/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
+COPY ./srcs/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
+COPY ./srcs/ /usr/share/grafana/dashboards
+
+#COPY ./srcs/grafana.db /usr/share/grafana/data/grafana.db
+
 
 WORKDIR /usr/share/grafana/conf
+
+
+
 
 EXPOSE	3000
 

@@ -62,31 +62,31 @@ kubectl apply -f ./srcs/influxdb/influxdb.yaml
 # Yea this is a good idea...
 #sleep 30;
 
-#docker build -t mysql_img ./srcs/mysql
-#kubectl apply -f ./srcs/mysql/mysql.yaml
+docker build -t mysql_img ./srcs/mysql
+kubectl apply -f ./srcs/mysql/mysql.yaml
 #kubectl delete -f ./srcs/mysql/mysql.yaml
 
 echo "Wait 30 seconds for MySQL to finish provisioning it's volume."
 sleep 30;
 
-#docker build -t phpmyadmin_img ./srcs/phpmyadmin
-#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
+docker build -t phpmyadmin_img ./srcs/phpmyadmin
+kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 #kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
 
-#docker build -t wordpress_img ./srcs/wordpress
-#kubectl apply -f ./srcs/wordpress/wordpress.yaml
+docker build -t wordpress_img ./srcs/wordpress
+kubectl apply -f ./srcs/wordpress/wordpress.yaml
 #kubectl delete -f ./srcs/wordpress/wordpress.yaml
 
-#docker build -t nginx_img ./srcs/nginx
-#kubectl apply -f ./srcs/nginx/nginx.yaml
+docker build -t nginx_img ./srcs/nginx
+kubectl apply -f ./srcs/nginx/nginx.yaml
 #kubectl delete -f ./srcs/nginx/nginx.yaml
 
 docker build -t grafana_img ./srcs/grafana
 kubectl apply -f ./srcs/grafana/grafana.yaml
 #kubectl delete -f ./srcs/grafana/grafana.yaml
 
-#docker build -t ftps_img ./srcs/ftps
-#kubectl apply -f ./srcs/ftps/ftps.yaml
+docker build -t ftps_img ./srcs/ftps
+kubectl apply -f ./srcs/ftps/ftps.yaml
 #kubectl delete -f ./srcs/ftps/ftps.yaml
 
 echo "Nginx: http://$node_ip"
