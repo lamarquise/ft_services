@@ -12,12 +12,10 @@ COPY ./srcs/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/influ
 COPY ./srcs/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
 COPY ./srcs/ /usr/share/grafana/dashboards
 
+	# don't like this option...
 #COPY ./srcs/grafana.db /usr/share/grafana/data/grafana.db
 
-
 WORKDIR /usr/share/grafana/conf
-
-
 
 
 EXPOSE	3000
