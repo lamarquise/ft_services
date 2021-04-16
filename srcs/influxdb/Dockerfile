@@ -11,7 +11,7 @@ COPY ./srcs/livenessprobe.sh livenessprobe.sh
 COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 
-CMD	screen -d -m telegraf && influxd
+#CMD	screen -d -m telegraf && influxdb
 
 #if i do celia's thing for Telegraf
-#CMD	["influxd", "run"]
+CMD	["influxdb", "run"]

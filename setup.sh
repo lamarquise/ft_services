@@ -61,41 +61,52 @@ kubectl apply -f ./srcs/metallb.yaml
 # order matters?
 docker build -t basic_alpine_img ./srcs/basic_alpine
 
-#docker build -t influxdb_img ./srcs/influxdb
-#kubectl apply -f ./srcs/influxdb/influxdb.yaml
+docker build -t influxdb_img ./srcs/influxdb
+kubectl apply -f ./srcs/influxdb/influxdb.yaml
 #kubectl delete -f ./srcs/influxdb/influxdb.yaml
 
-docker build -t mysql_img ./srcs/mysql
-kubectl apply -f ./srcs/mysql/mysql.yaml
-#kubectl delete -f ./srcs/mysql/mysql.yaml
-
+# do i want this here to? for Volume provisioning?
 #sleep 30;
 
-docker build -t phpmyadmin_img ./srcs/phpmyadmin
-kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
+#docker build -t mysql_img ./srcs/mysql
+#kubectl apply -f ./srcs/mysql/mysql.yaml
+#kubectl delete -f ./srcs/mysql/mysql.yaml
+
+# might make this 60 before i submit just incase someone else
+# has a shit computer...
+#sleep 30;
+
+#docker build -t phpmyadmin_img ./srcs/phpmyadmin
+#kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 #kubectl delete -f ./srcs/phpmyadmin/phpmyadmin.yaml
 
-docker build -t wordpress_img ./srcs/wordpress
-kubectl apply -f ./srcs/wordpress/wordpress.yaml
+#docker build -t wordpress_img ./srcs/wordpress
+#kubectl apply -f ./srcs/wordpress/wordpress.yaml
 #kubectl delete -f ./srcs/wordpress/wordpress.yaml
 
 #docker build -t nginx_img ./srcs/nginx
 #kubectl apply -f ./srcs/nginx/nginx.yaml
 #kubectl delete -f ./srcs/nginx/nginx.yaml
 
-#docker build -t grafana_img ./srcs/grafana
-#kubectl apply -f ./srcs/grafana/grafana.yaml
+docker build -t grafana_img ./srcs/grafana
+kubectl apply -f ./srcs/grafana/grafana.yaml
 #kubectl delete -f ./srcs/grafana/grafana.yaml
 
 #docker build -t ftps_img ./srcs/ftps
 #kubectl apply -f ./srcs/ftps/ftps.yaml
 #kubectl delete -f ./srcs/ftps/ftps.yaml
 
+# do i want this here to? for Volume provisioning?
+#sleep 30;
 
 echo "Nginx: http://$node_ip"
 echo "Wordpress: https://$node_ip:5050"
 echo "Phpmyadmin: https://$node_ip:5000"
 #echo "Wordpress: https://$node_ip:5050"
+echo "FTPS: $node_ip User:'user' Password:'password'"
+echo "Grafana: http://$node_ip:3000 User:'admin' Password:'admin'"
+echo "Datasource in Grafana from IndluxDB: http://$node_ip:8086 Database: 'telegraf'"
+
 
 #echo https://$node_ip
 # at the end

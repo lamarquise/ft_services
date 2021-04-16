@@ -1,74 +1,75 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpmyadmin-deploy
-  labels:
-    app: phpmyadmin-app
+ name: phpmyadmin
+ labels:
+  app: phpmyadmin
 spec:
-  selector:
-    matchLabels:
-      app: phpmyadmin-app
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: phpmyadmin-app
-    spec:
-      restartPolicy: Always
-      containers:
-      - image: phpmyadmin_img
-        name: phpmyadmin
-        ports:
-        - containerPort: 5000
-          name: http
-        env:
-        - name: ROOT_USER
-          valueFrom:
-           configMapKeyRef:
-            name: my-vars
-            key: root_user
-        - name: ROOT_PASS
-          valueFrom:
-           configMapKeyRef:
-            name: my-vars
-            key: root_pass
-        - name: DB_USER
-          valueFrom:
-           configMapKeyRef:
-            name: my-vars
-            key: wp_user1
- #         value: "wp_user"
-        - name: DB_PASSWORD
-          valueFrom:
-           configMapKeyRef:
-            name: my-vars
-            key: wp_u1_pass
-        - name: DB_HOST
-          value: "mysql-service"
-        - name: DB_PORT
-          value: "3306"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 5000
-          initialDelaySeconds: 30
-          periodSeconds: 5
-        imagePullPolicy: Never
+ selector:
+  matchLabels:
+   app: phpmyadmin
+ strategy:
+  type: Recreate
+ template:
+  metadata:
+   labels:
+    app: phpmyadmin
+  spec:
+   restartPolicy: Always
+   containers:
+   - image: phpmyadmin_img
+     name: phpmyadmin
+     ports:
+     - containerPort: 5000
+       name: https
+     env:
+     - name: ROOT_USER
+       valueFrom:
+        configMapKeyRef:
+         name: my-vars
+         key: root_user
+     - name: ROOT_PASS
+       valueFrom:
+        configMapKeyRef:
+         name: my-vars
+         key: root_pass
+     - name: DB_USER
+       valueFrom:
+        configMapKeyRef:
+         name: my-vars
+         key: wp_user1
+#       value: "wp_user"
+     - name: DB_PASSWORD
+       valueFrom:
+        configMapKeyRef:
+         name: my-vars
+         key: wp_u1_pass
+     - name: DB_HOST
+       value: "mysql-service"
+     - name: DB_PORT
+       value: "3306"
+     livenessProbe:
+      httpGet:
+       scheme: HTTPS
+       path: /
+       port: 5000
+      initialDelaySeconds: 30
+      periodSeconds: 5
+     imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    metallb.universe.tf/allow-shared-ip: shared
-  name: phpmyadmin-svc
-  labels:
-    app: phpmyadmin-app
+ annotations:
+  metallb.universe.tf/allow-shared-ip: shared
+ name: phpmyadmin-service
+ labels:
+  app: phpmyadmin
 spec:
-  selector:
-    app: phpmyadmin-app
-  ports:
-    - port: 5000
-      targetPort: 5000
-      name: http
-  type: LoadBalancer
+ selector:
+  app: phpmyadmin
+ ports:
+  - port: 5000
+    targetPort: 5000
+    name: https
+ type: LoadBalancer

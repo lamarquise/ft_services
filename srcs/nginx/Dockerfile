@@ -19,8 +19,4 @@ COPY ./srcs/nginx.config /etc/nginx/conf.d/default.conf
 
 EXPOSE	80 443
 
-	# i think this is the right one...
 CMD	screen -d -m telegraf && nginx -g 'daemon off;'
-#CMD ["nginx", "-g", "daemon off;"]
-#CMD sh
-

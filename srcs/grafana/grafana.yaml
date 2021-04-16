@@ -53,8 +53,8 @@ kind: Service
 metadata:
  name: grafana-service
  annotations:
-  metallb.universe.tf/allow-shared-ip: metallb
-#  metallb.universe.tf/allow-shared-ip: shared
+#  metallb.universe.tf/allow-shared-ip: metallb
+  metallb.universe.tf/allow-shared-ip: shared
 spec:
  type: LoadBalancer
  selector:

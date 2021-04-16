@@ -1,14 +1,20 @@
 #!/bin/sh
 
-# consider doing this in the Dockerfile
-#apk add openrc
-#openrc
-#touch /run/openrc/softlevel
+adduser -S $FTP_USER -s /bin/sh
+addgroup $FTP_USER
+addgroup $FTP_USER $FTP_USER
+echo $FTP_USER:$FTP_PASSWORD | chpasswd
 
+openrc
+touch /run/openrc/softlevel
 
-#Celia does adduser stuff here...
+rc-update add vsftpd default
+rc-service vsftpd restart
+touch /var/log/vsftpd.log
 
-#service vsftpd restart
-/usr/sbin/vsftpd /etc/vsftpd.conf
+# run telegraf with screen?
+telegraf &
 
-tail -F /dev/null
+sed  -i 's/NODE_IP/'$NODE_IP'/g' /etc/vsftpd/vsftpd.conf
+
+tail -f /var/log/vsftpd.log

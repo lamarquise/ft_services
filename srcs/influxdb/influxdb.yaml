@@ -1,33 +1,33 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: influxdb-pv-clm
-  labels:
-    app: influxdb
+ name: influxdb-pv-clm
+ labels:
+  app: influxdb-app
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
+ accessModes:
+ - ReadWriteOnce
+ resources:
+  requests:
+   storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
  name: influxdb
  labels:
-  app: influxdb
+  app: influxdb-app
 spec:
  replicas: 1
  selector:
   matchLabels:
-   app: influxdb
+   app: influxdb-app
  strategy:
   type: Recreate
  template:
   metadata:
    labels:
-    app: influxdb
+    app: influxdb-app
   spec:
    restartPolicy: Always
    containers:
@@ -38,19 +38,19 @@ spec:
      - containerPort: 8086
        name: influxdb
      livenessProbe:
-       exec:
-        command:
-         - sh
-         - livenessprobe.sh
-       initialDelaySeconds: 15
-       periodSeconds: 3
+      exec:
+       command:
+       - sh
+       - livenessprobe.sh
+      initialDelaySeconds: 15
+      periodSeconds: 3
      volumeMounts:
-      - name: influxdb-vol
-        mountPath: /var/lib/influxdb
-   volumes:
      - name: influxdb-vol
-       persistentVolumeClaim:
-         claimName: influxdb-pv-clm
+       mountPath: /var/lib/influxdb
+   volumes:
+   - name: influxdb-vol
+     persistentVolumeClaim:
+      claimName: influxdb-pv-clm
 ---
 apiVersion: v1
 kind: Service
@@ -59,10 +59,9 @@ metadata:
 spec:
  type: ClusterIP
  selector:
-  app: influxdb
+  app: influxdb-app
  ports:
  - protocol: TCP
    port: 8086
-# Don't need this ?
    targetPort: 8086
    name: influxdb-service-port
