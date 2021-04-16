@@ -9,7 +9,7 @@ openrc
 touch /run/openrc/softlevel
 
 rc-update add vsftpd default
-rc-service vsftpd restart
+service vsftpd restart
 touch /var/log/vsftpd.log
 
 screen -d -m telegraf
